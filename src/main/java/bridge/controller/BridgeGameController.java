@@ -10,6 +10,7 @@ import bridge.domain.GameState;
 import bridge.domain.MoveResult;
 import bridge.view.InputView;
 import bridge.view.OutputView;
+import java.util.stream.IntStream;
 
 public class BridgeGameController {
     private final InputView inputView;
@@ -58,13 +59,12 @@ public class BridgeGameController {
     }
 
     private GameState getGameStatus() {
-        for (int location = 0; location < bridgeGame.getBridgeSize(); location++) {
-            MoveResult moveResult = moveBridge(location);
-            if (moveResult.isDifferent()) {
-                return GameState.FAILURE;
-            }
-        }
-        return GameState.SUCCESS;
+        return IntStream.range(0, bridgeGame.getBridgeSize())
+                .mapToObj(this::moveBridge)
+                .filter(MoveResult::isDifferent)
+                .findFirst()
+                .map(result -> GameState.FAILURE)
+                .orElse(GameState.SUCCESS);
     }
 
     private MoveResult moveBridge(int location) {
@@ -77,8 +77,7 @@ public class BridgeGameController {
     private BridgePosition readMoving() {
         while (true) {
             try {
-                BridgePosition position = BridgePosition.from(inputView.readMoving());
-                return position;
+                return BridgePosition.from(inputView.readMoving());
             } catch (IllegalArgumentException exception) {
                 outputView.printExceptionMessage(exception);
             }
