@@ -2,7 +2,6 @@ package bridge.view;
 
 import static bridge.util.BridgeException.BLANK_BRIDGE_LENGTH;
 import static bridge.util.BridgeException.BLANK_MOVING_LENGTH;
-import static bridge.util.BridgeException.INVALID_BRIDGE_SIZE;
 import static bridge.util.BridgeException.INVALID_NUMERIC_INPUT;
 
 import bridge.domain.GameAction;
@@ -25,14 +24,7 @@ public class InputView {
 
     private void validateBridgeSize(String inputBridgeSize) {
         validateBridgeSizeIsBlank(inputBridgeSize);
-        int bridgeSize = isNumeric(inputBridgeSize);
-        validateBridgeSizeRange(bridgeSize);
-    }
-
-    private static void validateBridgeSizeRange(int bridgeSize) {
-        if (bridgeSize < 3 || bridgeSize > 20) {
-            throw new IllegalArgumentException(INVALID_BRIDGE_SIZE.getMessage());
-        }
+        isNumeric(inputBridgeSize);
     }
 
     private void validateBridgeSizeIsBlank(String inputBridgeSize) {
@@ -67,10 +59,6 @@ public class InputView {
         if (inputMoving.isBlank()) {
             throw new IllegalArgumentException(BLANK_MOVING_LENGTH.getMessage());
         }
-    }
-
-    private void validateMovingPosition(String inputMoving) {
-
     }
 
     /**

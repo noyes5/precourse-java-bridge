@@ -1,5 +1,9 @@
 package bridge;
 
+import static bridge.util.BridgeException.INVALID_BRIDGE_SIZE;
+import static bridge.util.Constants.MAX_BRIDGE_SIZE;
+import static bridge.util.Constants.MIN_BRIDGE_SIZE;
+
 import bridge.domain.BridgePosition;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,12 +26,21 @@ public class BridgeMaker {
      * @return 입력받은 길이에 해당하는 다리 모양. 위 칸이면 "U", 아래 칸이면 "D"로 표현해야 한다.
      */
     public List<String> makeBridge(int size) {
-        List<String> bridge = new ArrayList<>();
+        validateBridgeSizeRange(size);
+        List<String> bridge = new ArrayList<>(size);
+        
         IntStream.range(0, size)
                 .mapToObj(i -> bridgeNumberGenerator.generate())
                 .map(this::makeAnswerSpace)
                 .forEach(bridge::add);
+
         return Collections.unmodifiableList(bridge);
+    }
+
+    private void validateBridgeSizeRange(int bridgeSize) {
+        if (bridgeSize < MIN_BRIDGE_SIZE || bridgeSize > MAX_BRIDGE_SIZE) {
+            throw new IllegalArgumentException(INVALID_BRIDGE_SIZE.getMessage());
+        }
     }
 
     public String makeAnswerSpace(int randomNumber) {
