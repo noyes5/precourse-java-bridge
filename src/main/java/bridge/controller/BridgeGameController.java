@@ -68,10 +68,21 @@ public class BridgeGameController {
     }
 
     private MoveResult moveBridge(int location) {
-        BridgePosition position = BridgePosition.from(inputView.readMoving());
+        BridgePosition position = readMoving();
         MoveResult moveResult = bridgeGame.move(location, position);
         outputView.printMap(bridgeGame.getDisplayBridge());
         return moveResult;
+    }
+
+    private BridgePosition readMoving() {
+        while (true) {
+            try {
+                BridgePosition position = BridgePosition.from(inputView.readMoving());
+                return position;
+            } catch (IllegalArgumentException exception) {
+                outputView.printExceptionMessage(exception);
+            }
+        }
     }
 
     private void handleSuccess() {
