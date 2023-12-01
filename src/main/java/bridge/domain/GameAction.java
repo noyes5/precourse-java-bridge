@@ -1,6 +1,6 @@
 package bridge.domain;
 
-import static bridge.domain.BridgeException.ERROR_GAME_COMMAND;
+import static bridge.util.BridgeException.ERROR_GAME_COMMAND;
 
 import java.util.Arrays;
 

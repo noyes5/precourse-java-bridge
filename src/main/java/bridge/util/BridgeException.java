@@ -1,4 +1,4 @@
-package bridge.domain;
+package bridge.util;
 
 public enum BridgeException {
     BLANK_BRIDGE_LENGTH("다리 길이가 입력되지 않았습니다."),

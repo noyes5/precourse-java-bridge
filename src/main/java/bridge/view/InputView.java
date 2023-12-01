@@ -1,9 +1,9 @@
 package bridge.view;
 
-import static bridge.domain.BridgeException.BLANK_BRIDGE_LENGTH;
-import static bridge.domain.BridgeException.BLANK_MOVING_LENGTH;
-import static bridge.domain.BridgeException.INVALID_BRIDGE_SIZE;
-import static bridge.domain.BridgeException.INVALID_NUMERIC_INPUT;
+import static bridge.util.BridgeException.BLANK_BRIDGE_LENGTH;
+import static bridge.util.BridgeException.BLANK_MOVING_LENGTH;
+import static bridge.util.BridgeException.INVALID_BRIDGE_SIZE;
+import static bridge.util.BridgeException.INVALID_NUMERIC_INPUT;
 
 import bridge.domain.GameAction;
 import camp.nextstep.edu.missionutils.Console;

@@ -1,6 +1,6 @@
 package bridge.domain;
 
-import static bridge.domain.BridgeException.INVALID_MOVE;
+import static bridge.util.BridgeException.INVALID_MOVE;
 
 import java.util.Arrays;
 

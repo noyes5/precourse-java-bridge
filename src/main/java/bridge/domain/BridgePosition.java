@@ -1,6 +1,6 @@
 package bridge.domain;
 
-import static bridge.domain.BridgeException.INVALID_BRIDGE_SPACE;
+import static bridge.util.BridgeException.INVALID_BRIDGE_SPACE;
 
 import java.util.Arrays;
 
