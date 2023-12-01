@@ -16,6 +16,16 @@ public class BridgeGameController {
 
     public void startGame() {
         outputView.printStart();
-        inputView.readBridgeSize();
+        makeBridge();
+    }
+
+    private int makeBridge() {
+        while (true) {
+            try {
+                return inputView.readBridgeSize();
+            } catch (IllegalArgumentException exception) {
+                outputView.printExceptionMessage(exception);
+            }
+        }
     }
 }

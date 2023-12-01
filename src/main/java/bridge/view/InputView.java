@@ -1,5 +1,9 @@
 package bridge.view;
 
+import static bridge.domain.BridgeException.BLANK_BRIDGE_LENGTH;
+import static bridge.domain.BridgeException.INVALID_BRIDGE_SIZE;
+import static bridge.domain.BridgeException.INVALID_NUMERIC_INPUT;
+
 import camp.nextstep.edu.missionutils.Console;
 
 /**
@@ -12,8 +16,35 @@ public class InputView {
      */
     public int readBridgeSize() {
         System.out.println(Message.INPUT_BRIDGE_SIZE.message);
-        String input = Console.readLine();
-        return Integer.parseInt(input);
+        String inputBridgeSize = Console.readLine();
+        validateBridgeSize(inputBridgeSize);
+        return Integer.parseInt(inputBridgeSize);
+    }
+
+    private void validateBridgeSize(String inputBridgeSize) {
+        validateBridgeSizeIsBlank(inputBridgeSize);
+        int bridgeSize = isNumeric(inputBridgeSize);
+        validateBridgeSizeRange(bridgeSize);
+    }
+
+    private static void validateBridgeSizeRange(int bridgeSize) {
+        if (bridgeSize < 3 || bridgeSize > 20) {
+            throw new IllegalArgumentException(INVALID_BRIDGE_SIZE.getMessage());
+        }
+    }
+
+    private void validateBridgeSizeIsBlank(String inputBridgeSize) {
+        if (inputBridgeSize.isBlank()) {
+            throw new IllegalArgumentException(BLANK_BRIDGE_LENGTH.getMessage());
+        }
+    }
+
+    private static int isNumeric(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException(INVALID_NUMERIC_INPUT.getMessage());
+        }
     }
 
     /**
