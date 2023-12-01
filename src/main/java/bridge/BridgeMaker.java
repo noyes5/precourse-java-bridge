@@ -28,7 +28,7 @@ public class BridgeMaker {
     public List<String> makeBridge(int size) {
         validateBridgeSizeRange(size);
         List<String> bridge = new ArrayList<>(size);
-        
+
         IntStream.range(0, size)
                 .mapToObj(i -> bridgeNumberGenerator.generate())
                 .map(this::makeAnswerSpace)

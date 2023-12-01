@@ -3,6 +3,7 @@ package bridge.view;
 import static bridge.util.BridgeException.BLANK_BRIDGE_LENGTH;
 import static bridge.util.BridgeException.BLANK_MOVING_LENGTH;
 import static bridge.util.BridgeException.INVALID_NUMERIC_INPUT;
+import static bridge.util.Constants.LINE_SEPARATOR;
 
 import bridge.domain.GameAction;
 import camp.nextstep.edu.missionutils.Console;
@@ -16,6 +17,7 @@ public class InputView {
      * 다리의 길이를 입력받는다.
      */
     public int readBridgeSize() {
+        System.out.print(LINE_SEPARATOR);
         System.out.println(Message.INPUT_BRIDGE_SIZE.message);
         String inputBridgeSize = Console.readLine();
         validateBridgeSize(inputBridgeSize);
@@ -45,6 +47,7 @@ public class InputView {
      * 사용자가 이동할 칸을 입력받는다.
      */
     public String readMoving() {
+        System.out.print(LINE_SEPARATOR);
         System.out.println(Message.INPUT_MOVE_POSITION.message);
         String inputMoving = Console.readLine();
         validateMoving(inputMoving);
