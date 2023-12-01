@@ -23,10 +23,14 @@ public enum BridgePosition {
         return BridgePosition.DOWN.moveSymbol;
     }
 
-    public static BridgePosition makeBridgeSymbol(String moveSymbol) {
-        return Arrays.stream(values())
-                .filter(value -> value.moveSymbol.equals(moveSymbol))
+    public static BridgePosition from(String inputPosition) {
+        return Arrays.stream(BridgePosition.values())
+                .filter(position -> position.moveSymbol.equals(inputPosition))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_BRIDGE_SPACE.getMessage()));
+    }
+
+    public boolean isSame(String string) {
+        return string.equals(this.moveSymbol);
     }
 }

@@ -2,7 +2,9 @@ package bridge.domain;
 
 public enum BridgeException {
     BLANK_BRIDGE_LENGTH("다리 길이가 입력되지 않았습니다."),
-    INVALID_BRIDGE_SPACE("올바르지 않은 값으로 다리를 생성할 수 없습니다."),
+    BLANK_MOVING_LENGTH("이동위치가 입력되지 않았습니다."),
+    INVALID_MOVE("올바른 값이 아닙니다."),
+    INVALID_BRIDGE_SPACE("다리 이동은 U또는 D로만 가능합니다."),
     INVALID_BRIDGE_SIZE("다리 길이는 3부터 20 사이의 숫자여야 합니다."),
     INVALID_NUMERIC_INPUT("다리 길이는 숫자만 입력 가능합니다.");
 

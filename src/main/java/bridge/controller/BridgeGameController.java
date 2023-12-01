@@ -2,6 +2,8 @@ package bridge.controller;
 
 import bridge.BridgeRandomNumberGenerator;
 import bridge.domain.BridgeGame;
+import bridge.domain.BridgePosition;
+import bridge.domain.MoveResult;
 import bridge.view.InputView;
 import bridge.view.OutputView;
 
@@ -19,6 +21,9 @@ public class BridgeGameController {
     public void startGame() {
         outputView.printStart();
         makeBridge();
+        while (true) {
+            gameProgress();
+        }
     }
 
     private void makeBridge() {
@@ -34,5 +39,21 @@ public class BridgeGameController {
                 outputView.printExceptionMessage(exception);
             }
         }
+    }
+
+    public void gameProgress() {
+        moveUntilEnd();
+    }
+
+    private void moveUntilEnd() {
+        while (bridgeGame.isNotEnd()) {
+            MoveResult moveResult = moveBridge();
+        }
+    }
+
+    private MoveResult moveBridge() {
+        BridgePosition position = BridgePosition.from(inputView.readMoving());
+        MoveResult moveResult = bridgeGame.move(position);
+        return moveResult;
     }
 }

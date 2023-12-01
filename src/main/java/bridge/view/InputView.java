@@ -1,6 +1,7 @@
 package bridge.view;
 
 import static bridge.domain.BridgeException.BLANK_BRIDGE_LENGTH;
+import static bridge.domain.BridgeException.BLANK_MOVING_LENGTH;
 import static bridge.domain.BridgeException.INVALID_BRIDGE_SIZE;
 import static bridge.domain.BridgeException.INVALID_NUMERIC_INPUT;
 
@@ -51,7 +52,23 @@ public class InputView {
      * 사용자가 이동할 칸을 입력받는다.
      */
     public String readMoving() {
-        return null;
+        String inputMoving = Console.readLine();
+        validateMoving(inputMoving);
+        return inputMoving;
+    }
+
+    private void validateMoving(String inputMoving) {
+        validateMovingIsBlank(inputMoving);
+    }
+
+    private void validateMovingIsBlank(String inputMoving) {
+        if (inputMoving.isBlank()) {
+            throw new IllegalArgumentException(BLANK_MOVING_LENGTH.getMessage());
+        }
+    }
+
+    private void validateMovingPosition(String inputMoving) {
+
     }
 
     /**
@@ -62,7 +79,8 @@ public class InputView {
     }
 
     private enum Message {
-        INPUT_BRIDGE_SIZE("다리의 길이를 입력해주세요.");
+        INPUT_BRIDGE_SIZE("다리의 길이를 입력해주세요."),
+        INPUT_MOVE_POSITION("이동할 칸을 선택해주세요. (위: U, 아래: D)");
 
         private final String message;
 

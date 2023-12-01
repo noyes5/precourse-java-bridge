@@ -9,6 +9,11 @@ public class Bridge {
         this.bridge = bridge;
     }
 
-    
+    public boolean isSamePosition(int location, BridgePosition position) {
+        return position.isSame(bridge.get(location));
+    }
 
+    public int getSize() {
+        return bridge.size();
+    }
 }
