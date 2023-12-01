@@ -33,4 +33,8 @@ public enum BridgePosition {
     public boolean isSame(String string) {
         return string.equals(this.moveSymbol);
     }
+
+    public boolean isRightPlace(BridgePosition position) {
+        return this == position;
+    }
 }

@@ -1,8 +1,12 @@
 package bridge.controller;
 
+import bridge.BridgeMaker;
 import bridge.BridgeRandomNumberGenerator;
+import bridge.domain.Bridge;
 import bridge.domain.BridgeGame;
 import bridge.domain.BridgePosition;
+import bridge.domain.GameResult;
+import bridge.domain.GameState;
 import bridge.domain.MoveResult;
 import bridge.view.InputView;
 import bridge.view.OutputView;
@@ -11,24 +15,27 @@ public class BridgeGameController {
     private final InputView inputView;
     private final OutputView outputView;
     private BridgeGame bridgeGame;
+    private GameResult gameResult;
 
     public BridgeGameController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
+    public void play() {
+        startGame();
+        makeBridge();
+        tryGame();
+    }
 
     public void startGame() {
         outputView.printStart();
-        makeBridge();
-        while (true) {
-            gameProgress();
-        }
     }
 
     private void makeBridge() {
-        int bridgeSize = readBridgeSize();
-        this.bridgeGame = new BridgeGame(bridgeSize, new BridgeRandomNumberGenerator());
+        BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
+        Bridge bridge = new Bridge(bridgeMaker.makeBridge(readBridgeSize()));
+        this.bridgeGame = new BridgeGame(bridge);
     }
 
     private int readBridgeSize() {
@@ -41,19 +48,44 @@ public class BridgeGameController {
         }
     }
 
+    private void tryGame() {
+        while (true) {
+            gameProgress();
+        }
+    }
+
     public void gameProgress() {
         moveUntilEnd();
     }
 
     private void moveUntilEnd() {
-        while (bridgeGame.isNotEnd()) {
-            MoveResult moveResult = moveBridge();
+        GameState gameState = getGameStatus();
+        if (gameState.isSuccess()) {
+            handleSuccess();
         }
+        handleFailure();
     }
 
-    private MoveResult moveBridge() {
+    private GameState getGameStatus() {
+        for (int location = 0; location < bridgeGame.getBridgeSize(); location++) {
+            MoveResult moveResult = moveBridge(location);
+            if (moveResult.isDifferent()) {
+                return GameState.FAILURE;
+            }
+        }
+        return GameState.SUCCESS;
+    }
+
+    private MoveResult moveBridge(int location) {
         BridgePosition position = BridgePosition.from(inputView.readMoving());
-        MoveResult moveResult = bridgeGame.move(position);
+        MoveResult moveResult = bridgeGame.move(location, position);
+        outputView.printMap(bridgeGame.getGameResult());
         return moveResult;
+    }
+
+    private void handleSuccess() {
+    }
+
+    private void handleFailure() {
     }
 }

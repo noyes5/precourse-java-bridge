@@ -10,6 +10,6 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
         BridgeGameController bridgeGameController = new BridgeGameController(inputView, outputView);
-        bridgeGameController.startGame();
+        bridgeGameController.play();
     }
 }

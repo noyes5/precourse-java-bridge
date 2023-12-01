@@ -1,25 +1,15 @@
 package bridge.domain;
 
-import bridge.BridgeMaker;
-import bridge.BridgeNumberGenerator;
-
 /**
  * 다리 건너기 게임을 관리하는 클래스
  */
 public class BridgeGame {
-    private int location;
-    private int totalTryCount;
     private Bridge bridge;
+    private GameResult gameResult;
 
-    public BridgeGame(int size, BridgeNumberGenerator generator) {
-        this.location = 0;
-        this.totalTryCount = 0;
-        makeBridge(size, generator);
-    }
-
-    private void makeBridge(int size, BridgeNumberGenerator generator) {
-        BridgeMaker bridgeMaker = new BridgeMaker(generator);
-        this.bridge = new Bridge(bridgeMaker.makeBridge(size));
+    public BridgeGame(Bridge bridge) {
+        this.bridge = bridge;
+        this.gameResult = GameResult.byDefault();
     }
 
     /**
@@ -27,10 +17,9 @@ public class BridgeGame {
      * <p>
      * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public MoveResult move(BridgePosition position) {
-        this.location++;
-        this.totalTryCount++;
+    public MoveResult move(int location, BridgePosition position) {
         MoveResult moveResult = MoveResult.from(bridge.isSamePosition(location, position));
+        gameResult.update(position, moveResult);
         return moveResult;
     }
 
@@ -46,7 +35,7 @@ public class BridgeGame {
         return bridge.getSize();
     }
 
-    public boolean isNotEnd() {
-        return location != bridge.getSize();
+    public DisplayBridge getGameResult() {
+        return gameResult.getResultBridge();
     }
 }

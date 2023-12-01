@@ -52,6 +52,7 @@ public class InputView {
      * 사용자가 이동할 칸을 입력받는다.
      */
     public String readMoving() {
+        System.out.println(Message.INPUT_MOVE_POSITION.message);
         String inputMoving = Console.readLine();
         validateMoving(inputMoving);
         return inputMoving;
