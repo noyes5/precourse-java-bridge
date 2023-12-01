@@ -29,7 +29,7 @@ public class GameResult {
         displayBridge.updateBridge(position, moveResult);
     }
 
-    public void initializeDiagrams() {
+    public void initializeBridge() {
         displayBridge = new DisplayBridge();
     }
 }

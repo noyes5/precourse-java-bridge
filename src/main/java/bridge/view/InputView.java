@@ -5,6 +5,7 @@ import static bridge.domain.BridgeException.BLANK_MOVING_LENGTH;
 import static bridge.domain.BridgeException.INVALID_BRIDGE_SIZE;
 import static bridge.domain.BridgeException.INVALID_NUMERIC_INPUT;
 
+import bridge.domain.GameAction;
 import camp.nextstep.edu.missionutils.Console;
 
 /**
@@ -75,13 +76,15 @@ public class InputView {
     /**
      * 사용자가 게임을 다시 시도할지 종료할지 여부를 입력받는다.
      */
-    public String readGameCommand() {
-        return null;
+    public GameAction readGameCommand() {
+        System.out.println(Message.INPUT_RETRY.message);
+        return GameAction.from(Console.readLine());
     }
 
     private enum Message {
         INPUT_BRIDGE_SIZE("다리의 길이를 입력해주세요."),
-        INPUT_MOVE_POSITION("이동할 칸을 선택해주세요. (위: U, 아래: D)");
+        INPUT_MOVE_POSITION("이동할 칸을 선택해주세요. (위: U, 아래: D)"),
+        INPUT_RETRY("게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)");
 
         private final String message;
 

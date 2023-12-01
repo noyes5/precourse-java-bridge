@@ -5,6 +5,7 @@ import bridge.BridgeRandomNumberGenerator;
 import bridge.domain.Bridge;
 import bridge.domain.BridgeGame;
 import bridge.domain.BridgePosition;
+import bridge.domain.GameAction;
 import bridge.domain.GameResult;
 import bridge.domain.GameState;
 import bridge.domain.MoveResult;
@@ -49,19 +50,10 @@ public class BridgeGameController {
     }
 
     private void tryGame() {
-        while (true) {
-            gameProgress();
-        }
-    }
-
-    public void gameProgress() {
-        moveUntilEnd();
-    }
-
-    private void moveUntilEnd() {
         GameState gameState = getGameStatus();
         if (gameState.isSuccess()) {
             handleSuccess();
+            return;
         }
         handleFailure();
     }
@@ -84,8 +76,27 @@ public class BridgeGameController {
     }
 
     private void handleSuccess() {
+        bridgeGame.end();
     }
 
     private void handleFailure() {
+        if (isContinue()) {
+            bridgeGame.retry();
+            tryGame();
+        }
+    }
+
+    private boolean isContinue() {
+        return GameAction.RETRY == readRetryOrQuit();
+    }
+
+    private GameAction readRetryOrQuit() {
+        while (true) {
+            try {
+                return inputView.readGameCommand();
+            } catch (IllegalArgumentException exception) {
+                outputView.printExceptionMessage(exception);
+            }
+        }
     }
 }
