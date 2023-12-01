@@ -37,7 +37,15 @@ public class BridgeGame {
         return bridge.getSize();
     }
 
-    public DisplayBridge getGameResult() {
+    public DisplayBridge getDisplayBridge() {
         return gameResult.getResultBridge();
+    }
+
+    public GameResult getGameResult() {
+        return gameResult;
+    }
+
+    public void winningGame() {
+        gameResult.winningGame();
     }
 }

@@ -32,4 +32,16 @@ public class GameResult {
     public void initializeBridge() {
         displayBridge = new DisplayBridge();
     }
+
+    public void winningGame() {
+        this.gameState = GameState.SUCCESS;
+    }
+
+    public int getTotalTryCount() {
+        return totalTryCount;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
 }

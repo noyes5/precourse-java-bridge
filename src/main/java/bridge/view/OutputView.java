@@ -1,6 +1,8 @@
 package bridge.view;
 
 import bridge.domain.DisplayBridge;
+import bridge.domain.GameResult;
+import bridge.domain.GameState;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -15,6 +17,10 @@ public class OutputView {
 
     public void printExceptionMessage(IllegalArgumentException exception) {
         System.out.println(exception.getMessage());
+    }
+
+    public void printStart() {
+        System.out.println(Message.GAME_INTRO.message);
     }
 
     /**
@@ -46,15 +52,27 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void printResult() {
+    public void printResult(GameResult gameResult) {
+        System.out.println(Message.RESULT_INTRO.message);
+        printMap(gameResult.getResultBridge());
+        printGameState(gameResult.getGameState());
+        printTotalTryCount(gameResult.getTotalTryCount());
     }
 
-    public void printStart() {
-        System.out.println(Message.GAME_INTRO.message);
+    private void printGameState(GameState gameState) {
+        System.out.println(String.format(Message.RESULT_GAME_STATE.message, gameState.getDisplay()));
     }
+
+    private void printTotalTryCount(int totalTryCount) {
+        System.out.println(String.format(Message.RESULT_TOTAL_TRY_COUNT.message, totalTryCount));
+    }
+
 
     private enum Message {
-        GAME_INTRO("다리건너기 게임을 시작합니다.");
+        GAME_INTRO("다리건너기 게임을 시작합니다."),
+        RESULT_INTRO("최종 게임 결과"),
+        RESULT_GAME_STATE("게임 성공 여부: %s"),
+        RESULT_TOTAL_TRY_COUNT("총 시도한 횟수: %d");
 
         private final String message;
 

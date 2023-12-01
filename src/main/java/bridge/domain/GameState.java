@@ -12,8 +12,11 @@ public enum GameState {
         this.isSuccess = isSuccess;
     }
 
-
     public boolean isSuccess() {
         return this.isSuccess;
+    }
+
+    public String getDisplay() {
+        return display;
     }
 }

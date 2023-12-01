@@ -20,4 +20,5 @@ public class DisplayBridge {
     public List<String> getLowerBridge() {
         return Collections.unmodifiableList(lowerBridge);
     }
+
 }

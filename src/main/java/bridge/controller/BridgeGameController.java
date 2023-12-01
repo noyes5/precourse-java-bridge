@@ -6,7 +6,6 @@ import bridge.domain.Bridge;
 import bridge.domain.BridgeGame;
 import bridge.domain.BridgePosition;
 import bridge.domain.GameAction;
-import bridge.domain.GameResult;
 import bridge.domain.GameState;
 import bridge.domain.MoveResult;
 import bridge.view.InputView;
@@ -16,7 +15,6 @@ public class BridgeGameController {
     private final InputView inputView;
     private final OutputView outputView;
     private BridgeGame bridgeGame;
-    private GameResult gameResult;
 
     public BridgeGameController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
@@ -27,6 +25,7 @@ public class BridgeGameController {
         startGame();
         makeBridge();
         tryGame();
+        printResult();
     }
 
     public void startGame() {
@@ -71,12 +70,12 @@ public class BridgeGameController {
     private MoveResult moveBridge(int location) {
         BridgePosition position = BridgePosition.from(inputView.readMoving());
         MoveResult moveResult = bridgeGame.move(location, position);
-        outputView.printMap(bridgeGame.getGameResult());
+        outputView.printMap(bridgeGame.getDisplayBridge());
         return moveResult;
     }
 
     private void handleSuccess() {
-        bridgeGame.end();
+        bridgeGame.winningGame();
     }
 
     private void handleFailure() {
@@ -98,5 +97,9 @@ public class BridgeGameController {
                 outputView.printExceptionMessage(exception);
             }
         }
+    }
+
+    private void printResult() {
+        outputView.printResult(bridgeGame.getGameResult());
     }
 }
